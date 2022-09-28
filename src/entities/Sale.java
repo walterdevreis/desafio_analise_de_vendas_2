@@ -82,7 +82,7 @@ public class Sale {
 		return Objects.equals(seller, other.seller);
 	}
 	
-	/*@Override
+	@Override
 	public String toString() {
 		return month
 				+ "/"
@@ -95,5 +95,5 @@ public class Sale {
 				+ total
 				+ ", pm = "
 				+ String.format("%.2f%n", averagePrice());
-	}	*/
+	}	
 }

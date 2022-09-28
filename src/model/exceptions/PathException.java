@@ -7,5 +7,4 @@ public class PathException extends RuntimeException {
 	public PathException (String msg) {
 		super(msg);
 	}
-
 }

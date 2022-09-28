@@ -3,16 +3,12 @@ package application;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import java.util.Set;
 import entities.Sale;
 
 public class Program {
@@ -45,24 +41,20 @@ public class Program {
 				line = br.readLine();
 			}
 			
-			Map<String, Double> totalSold = new LinkedHashMap<>(); 
+			Set<String> name = new HashSet<>();
 			
 			for(Sale s : list) {				
-				if(totalSold.containsKey(s.getSeller())) {
-					Double sales = totalSold.get(s.getSeller());
-					totalSold.put(s.getSeller(), s.getTotal() + sales);
-				}
-				else {
-					totalSold.put(s.getSeller(), s.getTotal());
-				}
+				name.add(s.getSeller()); 
 			}			
-			
-			for (String key : totalSold.keySet()) {
-				System.out.println(key + " - " + String.format("%.2f", totalSold.get(key)));
-			}
-			
-			
 
+			for(String n : name) {
+				double sum = list.stream()
+						.filter(s -> (s.getSeller().equals(n)))
+						.mapToDouble(s -> s.getTotal())
+						.reduce(0.0, (x, y) -> x + y);
+				
+				System.out.printf("%s - R$ %.2f%n", n, sum);				
+			}
 
 		} catch (IOException e) {
 			System.out.println("Erro: " + e.getMessage());
@@ -70,5 +62,4 @@ public class Program {
 
 		sc.close();
 	}
-
 }
